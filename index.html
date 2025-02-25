@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gioco a Domande - JW Broadcasting Febbraio 2025</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f9f9f9;
+      color: #333;
+      padding: 20px;
+      text-align: center;
+    }
+
+    h1 {
+      color: #2c3e50;
+    }
+
+    .question {
+      background-color: #ecf0f1;
+      padding: 20px;
+      border-radius: 10px;
+      margin: 20px auto;
+      max-width: 600px;
+      box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .options {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 15px;
+    }
+
+    .option {
+      padding: 10px 20px;
+      background-color: #3498db;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .option:hover {
+      background-color: #2980b9;
+    }
+
+    .result {
+      margin-top: 20px;
+      font-weight: bold;
+    }
+
+    .correct {
+      color: #27ae60;
+    }
+
+    .wrong {
+      color: #e74c3c;
+    }
+
+    .score {
+      margin-top: 30px;
+      font-size: 1.2em;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>Gioco a Domande - JW Broadcasting Febbraio 2025</h1>
+  <div id="game">
+    <div class="question" id="question"></div>
+    <div class="options">
+      <button class="option" id="option1"></button>
+      <button class="option" id="option2"></button>
+    </div>
+    <div class="result" id="result"></div>
+    <div class="score" id="score"></div>
+  </div>
+
+  <script>
+    // Domande e risposte
+    const questions = [{
+        question: "Cos'è l'umiltà secondo il programma?",
+        options: ["Modestia di mente", "Orgoglio e arroganza"],
+        correct: 0
+      },
+      {
+        question: "Chi è un esempio biblico di umiltà?",
+        options: ["Saul (re d'Israele)", "Davide"],
+        correct: 1
+      },
+      {
+        question: "Cosa favorisce l'umiltà nel matrimonio?",
+        options: ["Disaccordi continui", "Pace e collaborazione"],
+        correct: 1
+      },
+      {
+        question: "Qual è il tema del video musicale di febbraio?",
+        options: ["Modellami come argilla", "Sii forte e coraggioso"],
+        correct: 0
+      },
+      {
+        question: "In quale paese l'opera di predicazione è iniziata nel 1914?",
+        options: ["Albania", "Myanmar"],
+        correct: 1
+      },
+      {
+        question: "Chi ha detto: 'La mia gioia è completa'?",
+        options: ["Giovanni Battista", "Apostolo Paolo"],
+        correct: 0
+      },
+      {
+        question: "Cosa protegge l'umiltà?",
+        options: ["Dall'orgoglio", "Dalla pioggia"],
+        correct: 0
+      },
+      {
+        question: "Quale qualità è opposta all'umiltà?",
+        options: ["Modestia", "Arroganza"],
+        correct: 1
+      },
+      {
+        question: "Chi ha servito in Albania per 30 anni?",
+        options: ["Michael e Linda DiGregorio", "Lily e Daisy"],
+        correct: 0
+      },
+      {
+        question: "Cosa si usa in Myanmar per proteggere la pelle dal sole?",
+        options: ["Thanaka", "Olio di cocco"],
+        correct: 0
+      },
+      {
+        question: "Quale versetto biblico viene citato per descrivere Gesù come difensore dell'umiltà?",
+        options: ["Salmo 45:3, 4", "Proverbi 16:18"],
+        correct: 0
+      },
+      {
+        question: "Chi è stato il primo re d'Israele a perdere l'umiltà?",
+        options: ["Saul", "Davide"],
+        correct: 0
+      },
+      {
+        question: "Cosa significa il nome 'Cho Sandar Myint' in Myanmar?",
+        options: ["Dolce luna lassù", "Sole splendente"],
+        correct: 0
+      },
+      {
+        question: "Quale albero viene utilizzato per produrre il thanaka?",
+        options: ["Albero di thanaka", "Albero di teak"],
+        correct: 0
+      },
+      {
+        question: "Quanti gruppi etnici principali ci sono in Myanmar?",
+        options: ["8", "12"],
+        correct: 0
+      },
+      {
+        question: "Chi ha detto: 'La religione è un laccio e una truffa'?",
+        options: ["Fratello Rutherford", "Apostolo Paolo"],
+        correct: 0
+      },
+      {
+        question: "Quale paese ha ottenuto la libertà religiosa dopo la caduta del muro di Berlino?",
+        options: ["Albania", "Myanmar"],
+        correct: 0
+      },
+      {
+        question: "Quale qualità è necessaria per perseverare durante l'opposizione?",
+        options: ["Umiltà", "Forza fisica"],
+        correct: 0
+      },
+      {
+        question: "Chi ha servito come pioniere speciale in Myanmar?",
+        options: ["Lily e Daisy", "Michael e Linda"],
+        correct: 0
+      },
+      {
+        question: "Quale libro della Bibbia descrive Saul come 'nascosto tra i bagagli'?",
+        options: ["1 Samuele", "2 Re"],
+        correct: 0
+      },
+      {
+        question: "Quale versetto biblico dice: 'L'orgoglio viene prima del crollo'?",
+        options: ["Proverbi 16:18", "Salmo 18:35"],
+        correct: 0
+      },
+      {
+        question: "Chi ha detto: 'Anche se non sono bravo nel parlare, certamente non sono impreparato quanto a conoscenza'?",
+        options: ["Apostolo Paolo", "Giovanni Battista"],
+        correct: 0
+      },
+      {
+        question: "Quale paese è soprannominato 'Paese d'oro'?",
+        options: ["Myanmar", "Albania"],
+        correct: 0
+      },
+      {
+        question: "Quale qualità è descritta come 'l'olio per un motore'?",
+        options: ["Umiltà", "Pazienza"],
+        correct: 0
+      }
+    ];
+    let currentQuestion = 0;
+    let score = 0;
+    const questionElement = document.getElementById('question');
+    const option1Element = document.getElementById('option1');
+    const option2Element = document.getElementById('option2');
+    const resultElement = document.getElementById('result');
+    const scoreElement = document.getElementById('score');
+    // Mostra la domanda corrente
+    function showQuestion() {
+      const q = questions[currentQuestion];
+      questionElement.textContent = q.question;
+      option1Element.textContent = q.options[0];
+      option2Element.textContent = q.options[1];
+      resultElement.textContent = '';
+    }
+    // Controlla la risposta
+    function checkAnswer(selected) {
+      const q = questions[currentQuestion];
+      if (selected === q.correct) {
+        resultElement.textContent = "Corretto! 🎉";
+        resultElement.className = "result correct";
+        score++;
+      } else {
+        resultElement.textContent = "Sbagliato! 😢";
+        resultElement.className = "result wrong";
+      }
+      scoreElement.textContent = `Punteggio: ${score} / ${questions.length}`;
+      setTimeout(nextQuestion, 1500); // Passa alla prossima domanda dopo 1,5 secondi
+    }
+    // Passa alla prossima domanda
+    function nextQuestion() {
+      currentQuestion++;
+      if (currentQuestion < questions.length) {
+        showQuestion();
+      } else {
+        questionElement.textContent = "Gioco completato! 🎉";
+        option1Element.style.display = 'none';
+        option2Element.style.display = 'none';
+        resultElement.textContent = `Hai totalizzato ${score} punti su ${questions.length}!`;
+      }
+    }
+    // Aggiungi event listener ai pulsanti
+    option1Element.addEventListener('click', () => checkAnswer(0));
+    option2Element.addEventListener('click', () => checkAnswer(1));
+    // Inizia il gioco
+    showQuestion();
+  </script>
+</body>
+
+</html>
